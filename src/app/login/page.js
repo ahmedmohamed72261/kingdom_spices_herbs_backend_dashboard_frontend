@@ -42,9 +42,7 @@ export default function LoginPage() {
         {/* Logo/Header */}
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h12a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" clipRule="evenodd" />
-            </svg>
+            <img src="/logo.png" alt="Herbs Company Logo" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Admin Dashboard</h1>
           <p className="text-gray-600">Herbs & Natural Products Management</p>
