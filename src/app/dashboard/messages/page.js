@@ -69,7 +69,11 @@ export default function MessagesPage() {
   const handleDeleteMessage = async () => {
     try {
       await api.delete(`/messages/${selectedMessage._id}`);
-      setMessages(messages.filter(msg => msg._id !== selectedMessage._id));
+      // Create a new array without the deleted message to ensure UI updates immediately
+      const updatedMessages = messages.filter(msg => msg._id !== selectedMessage._id);
+      setMessages(updatedMessages);
+      // Also update filtered messages to ensure consistent UI
+      setFilteredMessages(prevFiltered => prevFiltered.filter(msg => msg._id !== selectedMessage._id));
       setShowDeleteModal(false);
       setSelectedMessage(null);
       toast.success('Message deleted successfully!');
@@ -81,10 +85,16 @@ export default function MessagesPage() {
 
   const markAsRead = async (id) => {
     try {
-      const response = await api.put(`/messages/${id}/read`);
-      setMessages(messages.map(msg => 
-        msg._id === id ? response.data.data : msg
-      ));
+      // The backend endpoint is /messages/:id not /messages/:id/read
+      const response = await api.put(`/messages/${id}`, { isRead: true });
+      // Update both messages and filteredMessages states to ensure UI consistency
+      const updatedMessage = response.data.data;
+      setMessages(prevMessages => 
+        prevMessages.map(msg => msg._id === id ? updatedMessage : msg)
+      );
+      setFilteredMessages(prevFiltered => 
+        prevFiltered.map(msg => msg._id === id ? updatedMessage : msg)
+      );
     } catch (error) {
       console.error('Error marking message as read:', error);
       toast.error('Failed to mark message as read');

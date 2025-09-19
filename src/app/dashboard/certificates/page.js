@@ -273,7 +273,7 @@ export default function CertificatesPage() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                       placeholder="Enter certificate name"
                       required
                     />
@@ -352,7 +352,7 @@ export default function CertificatesPage() {
                       value={formData.description}
                       onChange={(e) => setFormData({...formData, description: e.target.value})}
                       rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
                       placeholder="Enter certificate description"
                       required
                     />
@@ -403,7 +403,7 @@ export default function CertificatesPage() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                       required
                     />
                   </div>
@@ -480,7 +480,7 @@ export default function CertificatesPage() {
                       value={formData.description}
                       onChange={(e) => setFormData({...formData, description: e.target.value})}
                       rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
                       required
                     />
                   </div>

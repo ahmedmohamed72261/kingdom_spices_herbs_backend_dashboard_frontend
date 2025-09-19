@@ -148,7 +148,16 @@ export default function ProductsPage() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setProducts([...products, response.data.data]);
+      
+      // Get the complete category data for the new product
+      const categoryData = categories.find(cat => cat._id === formData.category);
+      const newProduct = {
+        ...response.data.data,
+        category: categoryData || response.data.data.category
+      };
+      
+      // Update products state with the new product
+      setProducts([...products, newProduct]);
       filterProducts(searchTerm, selectedCategory);
       setFormData({ name: '', image: null, description: '', category: '' });
       setImagePreview('');
@@ -183,8 +192,17 @@ export default function ProductsPage() {
           'Content-Type': 'multipart/form-data',
         },
       });
+      
+      // Get the complete category data for the updated product
+      const categoryData = categories.find(cat => cat._id === formData.category);
+      const updatedProduct = {
+        ...response.data.data,
+        category: categoryData || response.data.data.category
+      };
+      
+      // Update products state with the updated product
       setProducts(products.map(product => 
-        product._id === selectedProduct._id ? response.data.data : product
+        product._id === selectedProduct._id ? updatedProduct : product
       ));
       filterProducts(searchTerm, selectedCategory);
       setShowEditModal(false);
@@ -201,7 +219,9 @@ export default function ProductsPage() {
   const handleDeleteProduct = async () => {
     try {
       await api.delete(`/products/${selectedProduct._id}`);
-      setProducts(products.filter(product => product._id !== selectedProduct._id));
+      // Update products state by filtering out the deleted product
+      const updatedProducts = products.filter(product => product._id !== selectedProduct._id);
+      setProducts(updatedProducts);
       filterProducts(searchTerm, selectedCategory);
       setShowDeleteModal(false);
       setSelectedProduct(null);
@@ -285,7 +305,7 @@ export default function ProductsPage() {
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 text-gray-500 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -295,7 +315,7 @@ export default function ProductsPage() {
               <select
                 value={selectedCategory}
                 onChange={(e) => handleCategoryFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 text-gray-500 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
                 <option value="all">All Categories</option>
                 {categories.map(category => (
@@ -318,48 +338,49 @@ export default function ProductsPage() {
               data-aos-delay={index * 100}
             >
               {/* Product Image */}
-              <div className="aspect-video bg-gray-200 relative">
+              <div className="aspect-video bg-gray-200 relative overflow-hidden group">
                 <Image
                   src={product.image}
                   alt={product.name}
                   layout="fill"
                   objectFit="cover"
-                  className="w-full h-full"
+                  className="w-full h-full transition-transform duration-300 group-hover:scale-105"
                   onError={(e) => {
                     e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xMjUgNzVIMTc1VjEyNUgxMjVWNzVaIiBzdHJva2U9IiM5Q0E0QUYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIxMzciIGN5PSI4NyIgcj0iNCIgZmlsbD0iIzlDQTRBRiIvPgo8cGF0aCBkPSJNMTI1IDExMkwxMzUgMTAyTDE0NSAxMTJMMTY1IDkyTDE3NSAxMDJWMTI1SDEyNVYxMTJaIiBmaWxsPSIjOUNBNEFGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOUNBNEFGIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiPlByb2R1Y3QgSW1hZ2U8L3RleHQ+Cjwvc3ZnPgo=';
                   }}
                 />
                 <div className="absolute top-2 right-2">
-                  <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">
+                  <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full shadow-sm">
                     {getCategoryLabel(product.category)}
                   </span>
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
               {/* Product Info */}
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
+              <div className="p-5">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">{product.name}</h3>
                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
                 
                 {/* Action Buttons */}
                 <div className="flex space-x-2">
                   <button
                     onClick={() => openDetailsModal(product)}
-                    className="flex-1 bg-blue-50 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-100 transition-colors duration-200 flex items-center justify-center space-x-1"
+                    className="flex-1 bg-blue-50 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-100 transition-all duration-200 flex items-center justify-center space-x-1 hover:shadow-md"
                   >
                     <EyeIcon className="w-4 h-4" />
                     <span className="text-sm">Details</span>
                   </button>
                   <button
                     onClick={() => openEditModal(product)}
-                    className="flex-1 bg-green-50 text-green-600 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors duration-200 flex items-center justify-center space-x-1"
+                    className="flex-1 bg-green-50 text-green-600 px-3 py-2 rounded-lg hover:bg-green-100 transition-all duration-200 flex items-center justify-center space-x-1 hover:shadow-md"
                   >
                     <PencilIcon className="w-4 h-4" />
                     <span className="text-sm">Edit</span>
                   </button>
                   <button
                     onClick={() => openDeleteModal(product)}
-                    className="flex-1 bg-red-50 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 transition-colors duration-200 flex items-center justify-center space-x-1"
+                    className="flex-1 bg-red-50 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 transition-all duration-200 flex items-center justify-center space-x-1 hover:shadow-md"
                   >
                     <TrashIcon className="w-4 h-4" />
                     <span className="text-sm">Delete</span>
@@ -411,6 +432,7 @@ export default function ProductsPage() {
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-black"
                       required
+                      placeholder="Enter product name"
                     />
                   </div>
                   
@@ -508,8 +530,9 @@ export default function ProductsPage() {
                       value={formData.description}
                       onChange={(e) => setFormData({...formData, description: e.target.value})}
                       rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-black"
+                      className="w-full px-3 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-black"
                       required
+                      placeholder="Enter product description"
                     />
                   </div>
                   

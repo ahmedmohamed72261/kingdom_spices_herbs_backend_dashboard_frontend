@@ -184,7 +184,7 @@ export default function SettingsPage() {
                           type={showPasswords.current ? 'text' : 'password'}
                           value={passwordData.currentPassword}
                           onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
+                          className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
                           placeholder="Enter your current password"
                           required
                         />
@@ -211,7 +211,7 @@ export default function SettingsPage() {
                           type={showPasswords.new ? 'text' : 'password'}
                           value={passwordData.newPassword}
                           onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
+                          className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
                           placeholder="Enter your new password"
                           required
                         />
@@ -239,7 +239,7 @@ export default function SettingsPage() {
                           type={showPasswords.confirm ? 'text' : 'password'}
                           value={passwordData.confirmPassword}
                           onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
+                          className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
                           placeholder="Confirm your new password"
                           required
                         />
@@ -292,7 +292,7 @@ export default function SettingsPage() {
                         type="text"
                         value={generalSettings.siteName}
                         onChange={(e) => setGeneralSettings({...generalSettings, siteName: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                       />
                     </div>
 
@@ -304,7 +304,7 @@ export default function SettingsPage() {
                         value={generalSettings.siteDescription}
                         onChange={(e) => setGeneralSettings({...generalSettings, siteDescription: e.target.value})}
                         rows={3}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
                       />
                     </div>
 
@@ -316,7 +316,7 @@ export default function SettingsPage() {
                         <select
                           value={generalSettings.timezone}
                           onChange={(e) => setGeneralSettings({...generalSettings, timezone: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                          className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                         >
                           <option value="UTC">UTC</option>
                           <option value="America/New_York">Eastern Time</option>
@@ -333,7 +333,7 @@ export default function SettingsPage() {
                         <select
                           value={generalSettings.language}
                           onChange={(e) => setGeneralSettings({...generalSettings, language: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                          className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                         >
                           <option value="en">English</option>
                           <option value="ar">Arabic</option>
@@ -457,7 +457,7 @@ export default function SettingsPage() {
                         })}
                         min="5"
                         max="480"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                       />
                     </div>
 
@@ -474,7 +474,7 @@ export default function SettingsPage() {
                         })}
                         min="3"
                         max="10"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 text-gray-500 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                       />
                     </div>
 
